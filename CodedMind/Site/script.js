@@ -1,97 +1,71 @@
-const $ = selector => {
-    return document.querySelector(selector);
-  };
-  
-  function next() {
-    if ($(".hide")) {
-      $(".hide").remove(); 
-    }
-  
-    /* Step */
-  
-    if ($(".prev")) {
-      $(".prev").classList.add("hide");
-      $(".prev").classList.remove("prev");
-    }
-  
-    $(".act").classList.add("prev");
-    $(".act").classList.remove("act");
-  
-    $(".next").classList.add("act");
-    $(".next").classList.remove("next");
-  
-    /* New Next */
-  
-    $(".new-next").classList.remove("new-next");
-  
-    const addedEl = document.createElement('li');
-  
-    $(".list").appendChild(addedEl);
-    addedEl.classList.add("next","new-next");
+
+
+// menu hamburguer
+
+
+
+function clickMenu() {
+  const menu = document.getElementById('menu');
+  if (menu.style.display === "block") {
+      menu.style.display = "none";  // Oculta o menu
+
+  } else {
+      menu.style.display = "block"; // Exibe o menu
+      menu.style.position = "relative";
   }
-  
-  function prev() {
-    $(".new-next").remove();
-      
-    /* Step */
-  
-    $(".next").classList.add("new-next");
-  
-    $(".act").classList.add("next");
-    $(".act").classList.remove("act");
-  
-    $(".prev").classList.add("act");
-    $(".prev").classList.remove("prev");
-  
-    /* New Prev */
-  
-    $(".hide").classList.add("prev");
-    $(".hide").classList.remove("hide");
-  
-    const addedEl = document.createElement('li');
-  
-    $(".list").insertBefore(addedEl, $(".list").firstChild);
-    addedEl.classList.add("hide");
-  }
-  
-  slide = element => {
-    /* Next slide */
-    
-    if (element.classList.contains('next')) {
-      next();
-      
-    /* Previous slide */
-      
-    } else if (element.classList.contains('prev')) {
-      prev();
-    }
-  }
-  
-  const slider = $(".list"),
-        swipe = new Hammer($(".swipe"));
-  
-  slider.onclick = event => {
-    slide(event.target);
-  }
-  
-  swipe.on("swipeleft", (ev) => {
-    next();
-  });
-  
-  swipe.on("swiperight", (ev) => {
-    prev();
-  });
+}
+
+
+function menuOnClick() {
+  document.getElementById("menu-bar").classList.toggle("change");
+  document.getElementById("nav").classList.toggle("change");
+  document.getElementById("menu-bg").classList.toggle("change-bg");
+}
 
   // menu hamburguer
 
-  function clickMenu() {
-    const menu = document.getElementById('menu');
-    if (menu.style.display === "block") {
-        menu.style.display = "none";  // Oculta o menu
 
-    } else {
-        menu.style.display = "block"; // Exibe o menu
-        menu.style.position = "relative";
+
+  (function() {
+
+    const target = document.querySelector(".target");
+    const links = document.querySelectorAll(".mynav a");
+    const colors = ["deepskyblue", "orange", "firebrick", "gold", "magenta", "black", "darkblue"];
+  
+    function mouseenterFunc() {
+      if (!this.parentNode.classList.contains("active")) {
+        for (let i = 0; i < links.length; i++) {
+          if (links[i].parentNode.classList.contains("active")) {
+            links[i].parentNode.classList.remove("active");
+          }
+          links[i].style.opacity = "0.25";
+        }
+  
+        this.parentNode.classList.add("active");
+        this.style.opacity = "1";
+  
+        const width = this.getBoundingClientRect().width;
+        const height = this.getBoundingClientRect().height;
+        const left = this.getBoundingClientRect().left;
+        const top = this.getBoundingClientRect().top;
+        const color = colors[Math.floor(Math.random() * colors.length)];
+  
+        target.style.width = `${width}px`;
+        target.style.height = `${height}px`;
+        target.style.left = `${left}px`;
+        target.style.top = `${top}px`;
+        target.style.borderColor = color;
+        target.style.transform = "none";
+      }
     }
-}
+  
+    for (let i = 0; i < links.length; i++) {
+      links[i].addEventListener("click", (e) => e.preventDefault());
+      links[i].addEventListener("mouseenter", mouseenterFunc);
+    }
+    
+  })();
 
+  function cadastroOnClick(){
+    alert('Cadastro efetuado com sucesso!');
+  }
